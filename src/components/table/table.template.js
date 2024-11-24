@@ -11,14 +11,21 @@ function toCell(data) {
 
 function toColumn(col) {
   return `
-    <div class="column">${col}</div>
+    <div class="column" data-type="resizable">
+      ${col}
+      <div class="col-resize" data-resize="col"></div>
+    </div>
   `
 }
 
 function createRow(i, content) {
+  const resize = i ? '<div class="row-resize" data-resize="row"></div>' : '';
   return `
     <div class="row">
-      <div class="row-info">${i ? i : ''}</div>
+      <div class="row-info">
+        ${i ? i : ''}
+        ${resize}
+      </div>
       <div class="row-data">${content}</div>
     </div>
   `
