@@ -5,7 +5,7 @@ const CODES = {
 
 function toCell(data) {
   return `
-    <div class="cell" contenteditable>${data}</div>
+    <div class="cell" contenteditable data-name-column="${data}"></div>
   `
 }
 
@@ -13,7 +13,7 @@ function toColumn(col) {
   return `
     <div class="column" data-type="resizable">
       ${col}
-      <div class="col-resize" data-resize="col"></div>
+      <div class="col-resize" data-resize="col" data-column="${col}"></div>
     </div>
   `
 }
@@ -50,6 +50,7 @@ export function createTable(rowsCount = 40) {
   for (let i = 0; i < rowsCount; i++) {
     const cells = new Array(colsCount)
         .fill('')
+        .map(toChar)
         .map(toCell)
         .join('')
 

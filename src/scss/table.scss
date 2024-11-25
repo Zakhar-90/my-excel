@@ -71,7 +71,7 @@
         opacity: 0;
         background: $primary-color;
 
-        &:hover {
+        &:hover, &:active {
             opacity: 1;
         }
     }
@@ -80,7 +80,7 @@
         top: 0;
         width: 4px;
 
-        &:hover {
+        &:hover, &:active {
             cursor: col-resize;
         }
     }
