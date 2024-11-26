@@ -20,10 +20,10 @@ function toColumn(col, i) {
 
 function createRow(i, content) {
   const resize = i
-      ? '<div class="row-resize" data-resize="row" data-type="resizable"></div>'
+      ? '<div class="row-resize" data-resize="row"></div>'
       : '';
   return `
-    <div class="row">
+    <div class="row" data-type="resizable">
       <div class="row-info">
         ${i ? i : ''}
         ${resize}

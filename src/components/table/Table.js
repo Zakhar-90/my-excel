@@ -17,31 +17,40 @@ export class Table extends ExcelComponent {
 
   onMousedown(event) {
     const vector = event.target.dataset.resize;
-    console.log(vector);
-    if (event.target.dataset.resize) {
+
+    if (vector) {
       const $resizer = $(event.target);
       const $parent = $resizer.closest('[data-type="resizable"]');
+      console.log($parent)
       const coords = $parent.getCoords();
-      const cells = this.$root.findAll(
+      const cells = vector === 'col' ? this.$root.findAll(
           `[data-col="${$parent.data.col}"]`
-      );
+      ) : null;
 
       document.onmousemove = (e) => {
-        const delta = e.pageX - coords.right;
-        const value = coords.width + delta;
+        if (vector === 'col') {
+          const delta = e.pageX - coords.right;
+          const value = coords.width + delta;
 
-        $parent.$el.style.width = `${value}px`;
+          $parent.$el.style.width = `${value}px`;
 
-        cells.forEach((cell) => {
-          cell.style.width = `${value}px`;
-          cell.style.borderRight = '2px solid #3c74ff';
-        });
+          cells.forEach((cell) => {
+            cell.style.width = `${value}px`;
+            cell.style.borderRight = '2px solid #3c74ff';
+          });
+        } else {
+          const delta = e.pageY - coords.bottom;
+          const value = coords.height + delta;
+
+          $parent.$el.style.height = `${value}px`
+          // console.log(coords.height)
+        }
       }
 
       document.onmouseup = () => {
         document.onmousemove = null;
 
-        cells.forEach((cell) => {
+        cells && cells.forEach((cell) => {
           cell.style.borderRight = null;
         });
       }
