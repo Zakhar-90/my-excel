@@ -16,23 +16,24 @@ export class Table extends ExcelComponent {
   }
 
   onMousedown(event) {
+    const vector = event.target.dataset.resize;
+    console.log(vector);
     if (event.target.dataset.resize) {
       const $resizer = $(event.target);
       const $parent = $resizer.closest('[data-type="resizable"]');
       const coords = $parent.getCoords();
-      const nameColumn = $resizer.$el.dataset.column;
-      const listCellColumn = document.querySelectorAll(
-          `[data-name-column="${nameColumn}"]`
+      const cells = this.$root.findAll(
+          `[data-col="${$parent.data.col}"]`
       );
 
       document.onmousemove = (e) => {
         const delta = e.pageX - coords.right;
-        const value = `${coords.width + delta}px`;
+        const value = coords.width + delta;
 
-        $parent.$el.style.width = value;
+        $parent.$el.style.width = `${value}px`;
 
-        listCellColumn.forEach((cell) => {
-          cell.style.width = value;
+        cells.forEach((cell) => {
+          cell.style.width = `${value}px`;
           cell.style.borderRight = '2px solid #3c74ff';
         });
       }
@@ -40,10 +41,17 @@ export class Table extends ExcelComponent {
       document.onmouseup = () => {
         document.onmousemove = null;
 
-        listCellColumn.forEach((cell) => {
+        cells.forEach((cell) => {
           cell.style.borderRight = null;
         });
       }
     }
   }
 }
+
+// 53 ms  Scripting
+// 678 ms  Rendering
+// 315 ms  Painting
+// 196 ms  System
+// 4149 ms  Idle
+// 5392 ms  Total
