@@ -16,19 +16,18 @@ export class Table extends ExcelComponent {
   }
 
   onMousedown(event) {
-    const vector = event.target.dataset.resize;
+    const type = event.target.dataset.resize;
 
-    if (vector) {
+    if (type) {
       const $resizer = $(event.target);
       const $parent = $resizer.closest('[data-type="resizable"]');
-      console.log($parent)
       const coords = $parent.getCoords();
-      const cells = vector === 'col' ? this.$root.findAll(
+      const cells = type === 'col' ? this.$root.findAll(
           `[data-col="${$parent.data.col}"]`
       ) : null;
 
       document.onmousemove = (e) => {
-        if (vector === 'col') {
+        if (type === 'col') {
           const delta = e.pageX - coords.right;
           const value = coords.width + delta;
 
@@ -43,7 +42,9 @@ export class Table extends ExcelComponent {
           const value = coords.height + delta;
 
           $parent.$el.style.height = `${value}px`
-          // console.log(coords.height)
+          $parent.css = {
+            height: `${value}px`
+          }
         }
       }
 
