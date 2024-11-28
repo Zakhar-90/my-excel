@@ -1,6 +1,7 @@
 import {ExcelComponent} from '@core/ExcelComponent';
 import {createTable} from '@/components/table/table.template';
-import {resizeHandler} from './table.resize';
+import {resizeHandler} from '@/components/table/table.resize';
+import {shouldResize} from '@/components/table/table.functions';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -16,7 +17,7 @@ export class Table extends ExcelComponent {
   }
 
   onMousedown(event) {
-    if (event.target.dataset.resize) {
+    if (shouldResize(event)) {
       resizeHandler(this.$root, event)
     }
   }
