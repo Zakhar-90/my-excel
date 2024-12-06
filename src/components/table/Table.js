@@ -3,13 +3,14 @@ import {createTable} from '@/components/table/table.template';
 import {resizeHandler} from '@/components/table/table.resize';
 import {shouldResize} from '@/components/table/table.functions';
 import {TableSelection} from '@/components/table/TableSelection';
+import {$} from '@/core/dom';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
 
   constructor($root) {
     super($root, {
-      listeners: ['mousedown']
+      listeners: ['mousedown', 'click']
     })
   }
 
@@ -32,5 +33,10 @@ export class Table extends ExcelComponent {
     if (shouldResize(event)) {
       resizeHandler(this.$root, event)
     }
+  }
+
+  onClick(event) {
+    const $activeCell = $(event.target);
+    this.selection.select($activeCell);
   }
 }

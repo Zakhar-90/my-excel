@@ -4,8 +4,14 @@ export class TableSelection {
   }
 
   select($el) {
-    this.group.push($el);
-    $el.addClass('selected');
+    if ($el.isAttribute('data-id')) {
+      this.group.forEach(($cell) => {
+        $cell.removeClass('selected');
+      })
+      this.group.splice(0, this.group.length);
+      this.group.push($el);
+      $el.addClass('selected');
+    }
   }
 
   selectGroup() {

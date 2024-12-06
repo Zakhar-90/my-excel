@@ -77,6 +77,10 @@ class Dom {
   removeClass(className) {
     this.$el.classList.remove(className);
   }
+
+  isAttribute(nameAttribute) {
+    return this.$el.hasAttribute(nameAttribute);
+  }
 }
 
 export function $(selector) {
